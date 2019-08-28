@@ -27,15 +27,15 @@ grub-mkimage.exe --prefix /boot/grub --config early.cfg --directory i386-pc --fo
 copy i386-pc\boot.img boot.img
 copy /b boot.img+core.img grub.mbr
 del /f boot.img core.img
-echo 已生成Legacy启动模式的启动文件grub.mbr
+echo grub.mbr has maked (for Legacy BIOS)
 pause
 
 grub-mkimage.exe --prefix /boot/grub --config early.cfg --directory i386-efi --format i386-efi --output bootia32.efi part_gpt part_msdos disk fat exfat ext2 ntfs xfs appleldr hfs iso9660 normal search_fs_file configfile linux linux16 chain loopback echo efi_gop efi_uga video_bochs video_cirrus file gfxmenu gfxterm gfxterm_background gfxterm_menu halt reboot help jpeg ls png true
-echo 已生成EFI-ia32启动模式的启动文件bootia32.efi
+echo bootia32.efi has maked (for EFI-ia32)
 pause
 
 grub-mkimage.exe --prefix /boot/grub --config early.cfg --directory x86_64-efi --format x86_64-efi --output bootx64.efi part_gpt part_msdos disk fat exfat ext2 ntfs xfs appleldr hfs iso9660 normal search_fs_file configfile linux linux16 chain loopback echo efi_gop efi_uga video_bochs video_cirrus file gfxmenu gfxterm gfxterm_background gfxterm_menu halt reboot help jpeg ls png true
-echo 已生成EFI-x64启动模式的启动文件bootx64.efi
+echo bootx64.efi has maked (for EFI-x64)
 pause
 
 copy bootia32.efi %CURRENT_DISK%\efi\boot\bootia32.efi
