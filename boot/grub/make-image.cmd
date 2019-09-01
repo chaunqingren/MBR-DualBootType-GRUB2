@@ -21,9 +21,8 @@ echo 当前盘符和路径的短文件名格式：%~sdp0
 echo 当前批处理全路径：%~f0
 echo.
 
-@rem 启动盘若不是FAT32格式而是NTFS格式，则需加ntfs模块才能识别，否则提示“unknown filesystem”
-@rem UEFI启动模式只支持FAT32格式的分区，NTFS格式的分区只能在Legacy模式下能成功启动
-grub-mkimage.exe --prefix /boot/grub --config early.cfg --directory i386-pc --format i386-pc --output core.img biosdisk part_msdos fat exfat ext2 search_fs_file
+@rem 启动盘须是MBR分区表，Legacy模式不支持GPT，UEFI模式只支持从FAT32文件系统启动
+grub-mkimage.exe --prefix /boot/grub --config early.cfg --directory i386-pc --format i386-pc --output core.img biosdisk part_msdos fat ntfs search_fs_file
 copy i386-pc\boot.img boot.img
 copy /b boot.img+core.img grub.mbr
 del /f boot.img core.img
@@ -38,10 +37,10 @@ grub-mkimage.exe --prefix /boot/grub --config early.cfg --directory x86_64-efi -
 echo grubx64.efi has maked (for EFI-x64)
 pause
 
-copy grubia32.efi %CURRENT_DISK%\efi\boot\bootia32.efi
+@rem copy grubia32.efi %CURRENT_DISK%\efi\boot\bootia32.efi
 @rem copy C:\efi\microsoft\bootia32\bootmgfw.efi %CURRENT_DISK%\efi\microsoft\bootia32\bootmgfw.efi
-copy grubx64.efi %CURRENT_DISK%\efi\boot\bootx64.efi
+@rem copy grubx64.efi %CURRENT_DISK%\efi\boot\bootx64.efi
 @rem copy C:\efi\microsoft\boot\bootmgfw.efi %CURRENT_DISK%\efi\microsoft\boot\bootmgfw.efi
-del /f grubia32.efi grubx64.efi
+@rem del /f grubia32.efi grubx64.efi
 pause
 
